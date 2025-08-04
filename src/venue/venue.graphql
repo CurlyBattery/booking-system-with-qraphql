@@ -1,0 +1,30 @@
+type Venue {
+  id: String
+  name: String!
+  description: String
+  location: String!
+}
+
+input CreateVenueInput {
+  name: String!
+  description: String
+  location: String
+}
+
+input UpdateVenueInput { 
+  id: String!
+  name: String
+  description: String
+  location: String
+}
+
+type Query {
+  getVenues: [Venue]!
+  getVenue(id: String!): Venue
+}
+
+type Mutation {
+  createVenue(createVenueInput: CreateVenueInput!): Venue!
+  updateVenue(updateVenueInput: UpdateVenueInput!): Venue!
+  removeVenue(id: String!): Venue
+}
