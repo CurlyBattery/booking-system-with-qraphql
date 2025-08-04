@@ -52,4 +52,11 @@ export class RoomResolver {
       },
     });
   }
+
+  @ResolveField()
+  async bookings(@Root() room: Room) {
+    return this.prisma.booking.findMany({
+      where: { roomId: room.id },
+    });
+  }
 }

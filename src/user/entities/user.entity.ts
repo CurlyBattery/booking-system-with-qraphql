@@ -1,6 +1,7 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Role } from '../../../generated/prisma';
 import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { Booking } from '../../booking/entities/booking.entity';
 
 registerEnumType(Role, {
   name: 'Role',
@@ -26,4 +27,7 @@ export class User {
   @Field((type) => Role)
   @IsOptional()
   role?: Role;
+
+  @Field((type) => [Booking], { nullable: true })
+  bookings: [Booking] | null;
 }

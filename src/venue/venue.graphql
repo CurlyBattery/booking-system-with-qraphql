@@ -3,7 +3,7 @@ type Venue {
   name: String!
   description: String
   location: String!
-  rooms: [Room]
+  rooms: [Room!]
 }
 
 input CreateVenueInput {

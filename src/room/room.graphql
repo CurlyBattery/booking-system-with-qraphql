@@ -4,6 +4,7 @@ type Room {
   capacity: Int!
   venueId: String!
   venue: Venue
+  bookings: [Booking]
 }
 
 input CreateRoomInput {

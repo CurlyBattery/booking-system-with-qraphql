@@ -9,9 +9,8 @@ type User {
   password: String!
   name: String!
   role: Role
+  bookings: [Booking!]
 }
-
-
 
 input CreateUserInput {
   email: String!
