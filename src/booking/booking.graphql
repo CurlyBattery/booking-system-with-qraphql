@@ -1,0 +1,44 @@
+scalar DateTime
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+type Booking {
+  id: String
+  userId: String!
+  roomId: String!
+  startTime: DateTime!
+  endTime: DateTime!
+  status: BookingStatus
+  user: User
+  room: Room
+}
+
+input CreateBookingInput {
+  userId: String!
+  roomId: String!
+  startTime: DateTime!
+  endTime: DateTime!
+  status: BookingStatus
+}
+
+input UpdateBookingInput {
+  id: String!
+  startTime: DateTime
+  endTime: DateTime
+  status: BookingStatus
+}
+
+type Query {
+  getBookings: [Booking]!
+  getBooking(id: String!): Booking
+}
+
+type Mutation {
+  createBooking(createBookingInput: CreateBookingInput!): Booking!
+  updateBooking(updateBookingInput: UpdateBookingInput!): Booking!
+  removeBooking(id: String!): Booking
+}
