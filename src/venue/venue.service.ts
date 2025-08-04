@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'nestjs-prisma';
 
 import { CreateVenueInput } from './dto/create-venue.input';
 import { UpdateVenueInput } from './dto/update-venue.input';
+import { PrismaService } from 'nestjs-prisma';
 
 @Injectable()
 export class VenueService {
@@ -25,10 +25,19 @@ export class VenueService {
   }
 
   async findAll() {
-    return this.prisma.venue.findMany();
+    return this.prisma.venue.findMany({
+      include: {
+        rooms: true,
+      },
+    });
   }
 
   async findOne(id: string) {
-    return this.prisma.venue.findUnique({ where: { id } });
+    return this.prisma.venue.findUnique({
+      where: { id },
+      include: {
+        rooms: true,
+      },
+    });
   }
 }

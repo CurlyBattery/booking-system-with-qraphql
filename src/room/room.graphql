@@ -3,6 +3,7 @@ type Room {
   name: String!
   capacity: Int!
   venueId: String!
+  venue: Venue
 }
 
 input CreateRoomInput {
