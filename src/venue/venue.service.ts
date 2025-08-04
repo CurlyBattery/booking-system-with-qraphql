@@ -29,6 +29,6 @@ export class VenueService {
   }
 
   async findOne(id: string) {
-    return this.prisma.venue.findFirst({ where: { id } });
+    return this.prisma.venue.findUnique({ where: { id } });
   }
 }
