@@ -13,6 +13,7 @@ import { UpdateVenueInput } from './dto/update-venue.input';
 import { Venue as DBVenue } from '../../generated/prisma';
 import { Venue } from './entities/venue.entity';
 import { PrismaService } from 'nestjs-prisma';
+import { Public } from '@app/decorators';
 
 @Resolver('Venue')
 export class VenueResolver {
@@ -40,11 +41,13 @@ export class VenueResolver {
     return this.venueService.remove(id);
   }
 
+  @Public()
   @Query('getVenues')
   findAll(): Promise<DBVenue[]> {
     return this.venueService.findAll();
   }
 
+  @Public()
   @Query('getVenue')
   findOne(@Args('id') id: string): Promise<DBVenue> {
     return this.venueService.findOne(id);

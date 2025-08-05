@@ -11,6 +11,7 @@ import { CreateRoomInput } from './dto/create-room.input';
 import { UpdateRoomInput } from './dto/update-room.input';
 import { PrismaService } from 'nestjs-prisma';
 import { Room } from './entities/room.entity';
+import { Public } from '@app/decorators';
 
 @Resolver('Room')
 export class RoomResolver {
@@ -34,16 +35,19 @@ export class RoomResolver {
     return this.roomService.remove(id);
   }
 
+  @Public()
   @Query('getRooms')
   findAll() {
     return this.roomService.findAll();
   }
 
+  @Public()
   @Query('getRoom')
   findOne(@Args('id') id: string) {
     return this.roomService.findOne(id);
   }
 
+  @Public()
   @ResolveField()
   async venue(@Root() room: Room) {
     return this.prisma.venue.findUnique({
@@ -53,6 +57,7 @@ export class RoomResolver {
     });
   }
 
+  @Public()
   @ResolveField()
   async bookings(@Root() room: Room) {
     return this.prisma.booking.findMany({

@@ -6,6 +6,8 @@ import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
 import { UserModule } from '../user/user.module';
 import { AccessStrategy } from './strategies/access.strategy';
+import { APP_GUARD } from '@nestjs/core';
+import { GqlAccessGuard } from './guards/gql-access.guard';
 
 @Module({
   imports: [
@@ -21,6 +23,14 @@ import { AccessStrategy } from './strategies/access.strategy';
       inject: [ConfigService],
     }),
   ],
-  providers: [AuthResolver, AuthService, AccessStrategy],
+  providers: [
+    AuthResolver,
+    AuthService,
+    AccessStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: GqlAccessGuard,
+    },
+  ],
 })
 export class AuthModule {}
