@@ -1,0 +1,19 @@
+type AuthPayload {
+    userId: String!
+    role: Role!
+    accessToken: String!
+}
+
+input SignInInput {
+    email: String!
+    password: String!
+}
+
+type Query {
+    getAuthenticatedUser: User!
+}
+
+type Mutation {
+    signUp(registerInput: CreateUserInput): User!
+    signIn(loginInput: SignInInput): AuthPayload!
+}

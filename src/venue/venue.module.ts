@@ -4,5 +4,6 @@ import { VenueResolver } from './venue.resolver';
 
 @Module({
   providers: [VenueResolver, VenueService],
+  exports: [VenueService],
 })
 export class VenueModule {}
