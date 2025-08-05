@@ -54,7 +54,7 @@ export interface UpdateBookingInput {
 }
 
 export interface UpdateRoomInput {
-    capacity?: Nullable<string>;
+    capacity?: Nullable<number>;
     id: string;
     name?: Nullable<string>;
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { CreateVenueInput } from './dto/create-venue.input';
 import { UpdateVenueInput } from './dto/update-venue.input';
@@ -13,6 +13,8 @@ export class VenueService {
   }
 
   async update(id: string, updateVenueInput: UpdateVenueInput) {
+    await this.findOne(id);
+
     return this.prisma.venue.update({
       data: updateVenueInput,
       where: { id },
@@ -20,7 +22,8 @@ export class VenueService {
   }
 
   async remove(id: string) {
-    console.log(id);
+    await this.findOne(id);
+
     await this.prisma.venue.delete({ where: { id } });
   }
 
@@ -33,6 +36,11 @@ export class VenueService {
   }
 
   async findOne(id: string) {
+    const venue = await this.prisma.venue.findUnique({ where: { id } });
+    if (!venue) {
+      throw new NotFoundException('Venue not found');
+    }
+
     return this.prisma.venue.findUnique({
       where: { id },
       include: {
