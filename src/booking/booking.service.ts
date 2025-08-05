@@ -61,13 +61,6 @@ export class BookingService {
   }
 
   async findOne(id: string) {
-    const booking = await this.prisma.booking.findUnique({
-      where: { id },
-    });
-    if (!booking) {
-      throw new NotFoundException('Booking does not exists');
-    }
-
     return this.prisma.booking.findUnique({
       where: { id },
     });

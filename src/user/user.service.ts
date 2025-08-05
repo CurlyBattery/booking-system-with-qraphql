@@ -19,12 +19,9 @@ export class UserService {
       throw new ConflictException('User already exists');
     }
 
-    const hash = await bcrypt.hash(createUserInput.password, 10);
-
     return this.prisma.user.create({
       data: {
         ...createUserInput,
-        password: hash,
       },
     });
   }

@@ -1,13 +1,10 @@
 import { IsEmail, IsString, MinLength } from 'class-validator';
 
-export class CreateUserInput {
+export class SignInInput {
   @IsEmail()
   email: string;
 
   @IsString()
-  @MinLength(3)
+  @MinLength(1)
   password: string;
-
-  @IsString()
-  name: string;
 }

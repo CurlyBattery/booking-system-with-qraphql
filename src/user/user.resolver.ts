@@ -11,6 +11,8 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 import { PrismaService } from 'nestjs-prisma';
+import { GqlAccessGuard } from '../auth/guards/gql-access.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver('User')
 export class UserResolver {
@@ -19,11 +21,7 @@ export class UserResolver {
     private readonly prisma: PrismaService,
   ) {}
 
-  @Mutation('createUser')
-  create(@Args('createUserInput') createUserInput: CreateUserInput) {
-    return this.userService.create(createUserInput);
-  }
-
+  @UseGuards(GqlAccessGuard)
   @Mutation('updateUser')
   update(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     return this.userService.update(updateUserInput.id, updateUserInput);

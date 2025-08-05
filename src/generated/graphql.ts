@@ -37,13 +37,17 @@ export interface CreateUserInput {
     email: string;
     name: string;
     password: string;
-    role?: Nullable<Role>;
 }
 
 export interface CreateVenueInput {
     description?: Nullable<string>;
     location?: Nullable<string>;
     name: string;
+}
+
+export interface SignInInput {
+    email: string;
+    password: string;
 }
 
 export interface UpdateBookingInput {
@@ -73,6 +77,12 @@ export interface UpdateVenueInput {
     name?: Nullable<string>;
 }
 
+export interface AuthPayload {
+    accessToken: string;
+    role: Role;
+    userId: string;
+}
+
 export interface Booking {
     endTime: DateTime;
     id?: Nullable<string>;
@@ -87,12 +97,13 @@ export interface Booking {
 export interface IMutation {
     createBooking(createBookingInput: CreateBookingInput): Booking | Promise<Booking>;
     createRoom(createRoomInput: CreateRoomInput): Room | Promise<Room>;
-    createUser(createUserInput: CreateUserInput): User | Promise<User>;
     createVenue(createVenueInput: CreateVenueInput): Venue | Promise<Venue>;
     removeBooking(id: string): Nullable<Booking> | Promise<Nullable<Booking>>;
     removeRoom(id: string): Nullable<Room> | Promise<Nullable<Room>>;
     removeUser(id: string): Nullable<User> | Promise<Nullable<User>>;
     removeVenue(id: string): Nullable<Venue> | Promise<Nullable<Venue>>;
+    signIn(loginInput?: Nullable<SignInInput>): AuthPayload | Promise<AuthPayload>;
+    signUp(registerInput?: Nullable<CreateUserInput>): User | Promise<User>;
     updateBooking(updateBookingInput: UpdateBookingInput): Booking | Promise<Booking>;
     updateRoom(updateRoomInput: UpdateRoomInput): Room | Promise<Room>;
     updateUser(updateUserInput: UpdateUserInput): User | Promise<User>;
@@ -100,6 +111,7 @@ export interface IMutation {
 }
 
 export interface IQuery {
+    getAuthenticatedUser(): User | Promise<User>;
     getBooking(id: string): Nullable<Booking> | Promise<Nullable<Booking>>;
     getBookings(): Nullable<Booking>[] | Promise<Nullable<Booking>[]>;
     getRoom(id: string): Nullable<Room> | Promise<Nullable<Room>>;
@@ -124,7 +136,6 @@ export interface User {
     email: string;
     id?: Nullable<string>;
     name: string;
-    password: string;
     role?: Nullable<Role>;
 }
 
