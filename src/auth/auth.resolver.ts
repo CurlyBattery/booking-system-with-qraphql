@@ -8,6 +8,8 @@ import { AuthPayload } from './entities/auth-payload.entity';
 import { SignInInput } from './dto/sign-in.input';
 import { GqlAccessGuard } from './guards/gql-access.guard';
 import { UserService } from '../user/user.service';
+import { CurrentUser } from '@app/decorators';
+import type { AccessUser } from './types/access-user';
 
 @Resolver()
 export class AuthResolver {
@@ -30,10 +32,10 @@ export class AuthResolver {
 
   @UseGuards(GqlAccessGuard)
   @Query('getAuthenticatedUser')
-  async authenticate(@Context() context) {
-    const userId = context.req.user.userId;
-
-    const authenticatedUser = await this.userService.findOne(userId);
+  async authenticate(@CurrentUser() userFromRequest: AccessUser) {
+    const authenticatedUser = await this.userService.findOne(
+      userFromRequest.userId,
+    );
 
     return authenticatedUser;
   }
